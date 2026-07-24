@@ -1,0 +1,6 @@
+ADMIN_KEY=replace-with-a-long-random-admin-key
+RUNNER_SECRET=replace-with-a-different-long-random-runner-secret
+OPENAI_API_KEY=replace-with-your-server-side-key
+OPENAI_VISION_MODEL=gpt-4.1-mini,gpt-4o-mini
+OPENAI_IMAGE_DETAIL=high
+MYR_CNY_RATE=1.55

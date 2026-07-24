@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you reference this software, please credit LAI ZEYU."
+title: "Lrobotform Resume"
+type: software
+authors:
+  - family-names: "Lai"
+    given-names: "Zeyu"
+    alias: "lzy2767865503-pixel"
+repository-code: "https://github.com/lzy2767865503-pixel/lrobotform-resume"
+url: "https://lrobotform.com"
+version: "1.0.0"
+date-released: "2026-07-24"
+license: "LicenseRef-Proprietary"
+abstract: "A privacy-aware, quality-gated pipeline that turns verified resume source material into an ATS-ready PDF and a visual PDF."

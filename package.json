@@ -1,0 +1,23 @@
+{
+  "name": "lrobotform-resume",
+  "version": "1.0.0",
+  "description": "A privacy-aware, quality-gated dual-PDF resume generation pipeline.",
+  "author": "LAI ZEYU (https://github.com/lzy2767865503-pixel)",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "check": "wrangler deploy --dry-run",
+    "check:runner": "python3 -m py_compile aws-runner/resume_runner.py",
+    "db:migrate:local": "wrangler d1 execute lrobotform-resume --local --file=migrations/0001_resume_schema.sql",
+    "db:migrate:remote": "wrangler d1 execute lrobotform-resume --remote --file=migrations/0001_resume_schema.sql",
+    "test": "npm run check && npm run check:runner"
+  },
+  "devDependencies": {
+    "wrangler": "^4.100.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

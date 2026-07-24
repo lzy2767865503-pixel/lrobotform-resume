@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lrobotform Resume | ATS 简历优化</title>
+    <meta
+      name="description"
+      content="Lrobotform Resume provides ATS-focused resume optimization with a picture-style PDF and an ATS-readable PDF."
+    />
+    <meta name="author" content="LAI ZEYU" />
+    <meta name="copyright" content="Copyright 2026 LAI ZEYU. All rights reserved." />
+    <link rel="icon" href="/assets/lrobotform-logo.png" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#overview" aria-label="Lrobotform Resume">
+        <img src="/assets/lrobotform-wordmark.png" alt="" width="180" height="66" />
+        <span>Lrobotform</span>
+      </a>
+      <nav class="main-nav" aria-label="Main">
+        <a href="#overview" data-i18n="nav.resume">简历项目</a>
+        <a href="#outputs" data-i18n="nav.outputs">双版本</a>
+        <a href="#payment" data-i18n="nav.payment">付款</a>
+        <a href="#resume-order" data-i18n="nav.submit">提交</a>
+        <a href="#resume-output" data-i18n="nav.result">成果</a>
+      </nav>
+      <div class="header-actions">
+        <button type="button" class="lang-button" data-resume-lang="zh">中文</button>
+        <button type="button" class="lang-button" data-resume-lang="en">EN</button>
+        <a class="secondary-link" href="#workflow" data-i18n="nav.workflow">技术流程</a>
+        <a class="primary-link" href="#resume-order" data-i18n="nav.cta">开始生成</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="resume-hero" id="overview">
+        <div class="hero-copy">
+          <h1 data-i18n="hero.title">RM79 生成两份实战简历 PDF</h1>
+          <p data-i18n="hero.body">
+            把你的经历、教育、项目、技能和零散草稿直接粘贴进来。付款核验通过后，系统自动进入生成队列，输出一份图片结构版和一份 ATS 投递版。
+          </p>
+          <div class="hero-actions">
+            <a class="primary-link" href="#resume-order" data-i18n="hero.primary">提交资料</a>
+            <a class="secondary-link" href="#outputs" data-i18n="hero.secondary">查看交付物</a>
+          </div>
+        </div>
+        <div class="resume-preview" aria-label="Resume output preview">
+          <div class="preview-page visual-preview">
+            <strong>YOUR NAME</strong>
+            <span>Education Background</span>
+            <span>Work Experience</span>
+            <span>Project Experience</span>
+            <span>Skills & Languages</span>
+          </div>
+          <div class="preview-page ats-preview">
+            <strong>ATS VERSION</strong>
+            <span>Summary</span>
+            <span>Experience</span>
+            <span>Projects</span>
+            <span>Skills</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="trust-rail resume-trust" aria-label="Resume quality gates">
+        <div><span>01</span><strong data-i18n="trust.facts">事实一致性核对</strong><small data-i18n="trust.factsBody">不凭空增加学校、公司、日期或数字</small></div>
+        <div><span>02</span><strong data-i18n="trust.ats">ATS 结构检查</strong><small data-i18n="trust.atsBody">单栏、可选择文字、标准章节标题</small></div>
+        <div><span>03</span><strong data-i18n="trust.review">自动质量复审</strong><small data-i18n="trust.reviewBody">低于质量门槛会自动修订后再检查</small></div>
+        <div><span>04</span><strong data-i18n="trust.pdf">双 PDF 验收</strong><small data-i18n="trust.pdfBody">两份文件完整生成后才显示为完成</small></div>
+      </section>
+
+      <section class="info-band owner-band" aria-label="Project ownership">
+        <strong data-i18n="owner.title">项目产权</strong>
+        <p data-i18n="owner.body">
+          Lrobotform Resume 由 LAI ZEYU 创建并拥有。Copyright © 2026 LAI ZEYU. All rights reserved.
+        </p>
+      </section>
+
+      <section class="info-band resume-adline" id="workflow" aria-label="Resume positioning">
+        <strong data-i18n="position.title">我们的定位</strong>
+        <p data-i18n="position.body">
+          以事实一致性、岗位相关性和 ATS 可读性为核心。每份简历先整理原始资料，再经过自动质量复审与双 PDF 文件验收；不会凭空编造学历、公司、奖项或数字。
+        </p>
+      </section>
+
+      <section class="section-grid" id="outputs">
+        <div>
+          <h2 data-i18n="outputs.title">一次付款，两份 PDF</h2>
+          <p data-i18n="outputs.body">同一份资料会生成两个用途不同的版本。图片版适合人工阅读和展示，ATS 版适合投递系统读取。</p>
+        </div>
+        <div class="resume-output-grid">
+          <article class="package-card">
+            <span data-i18n="outputs.visualKicker">Version 01</span>
+            <strong data-i18n="outputs.visualTitle">图片结构版 PDF</strong>
+            <p data-i18n="outputs.visualPrice">按参考图逻辑排版</p>
+            <small data-i18n="outputs.visualBody">教育、经历、项目、课外、技能、语言等模块清晰分区，适合发给老师、朋友或人工面试官阅读。</small>
+          </article>
+          <article class="package-card">
+            <span data-i18n="outputs.atsKicker">Version 02</span>
+            <strong data-i18n="outputs.atsTitle">ATS 投递版 PDF</strong>
+            <p data-i18n="outputs.atsPrice">单栏可复制文字</p>
+            <small data-i18n="outputs.atsBody">不使用头像、图标、复杂表格和装饰元素，优先保证招聘系统能读取标题、日期、经历和关键词。</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="payment-section" id="payment">
+        <div class="payment-copy">
+          <h2 data-i18n="payment.title">安全订单流程</h2>
+          <p data-i18n="payment.body">
+            生产环境使用私有配置处理付款核验。公开仓库不包含收款账号、二维码、客户付款凭证或任何 API 密钥。
+          </p>
+          <div class="bank-box">
+            <span data-i18n="payment.securityKicker">Private configuration</span>
+            <strong data-i18n="payment.securityTitle">凭证不会公开</strong>
+            <p data-i18n="payment.bankNote">付款文件保存在私有对象存储中，并通过 SHA-256 防止同一凭证重复使用。</p>
+          </div>
+        </div>
+        <aside class="service-panel payment-security-panel">
+          <span>R2 + SHA-256</span>
+          <strong data-i18n="payment.caption">私有存储与重复凭证拦截</strong>
+          <p data-i18n="payment.security">金额识别、风险判断和人工复核入口均在服务端完成；浏览器不会接触模型或存储密钥。</p>
+        </aside>
+      </section>
+
+      <section class="order-section resume-order-section" id="resume-order">
+        <div class="order-heading">
+          <h2 data-i18n="order.title">提交简历资料</h2>
+          <p data-i18n="order.body">不用按模版顺序整理。把你现有的简历、经历、课程项目、奖项、技能、目标岗位要求全部贴进来即可。</p>
+        </div>
+
+        <form id="resumeOrderForm" class="order-form resume-form">
+          <input id="resumeSubmittedAt" name="submittedAt" type="hidden" value="" />
+          <label class="bot-field" aria-hidden="true">
+            <span>Company website</span>
+            <input name="companyWebsite" type="text" tabindex="-1" autocomplete="off" />
+          </label>
+
+          <label>
+            <span data-i18n="field.contact">联系方式 WX or WhatsApp *</span>
+            <input id="resumeContact" name="contact" type="text" autocomplete="name" required placeholder="WX / WhatsApp" />
+          </label>
+
+          <label>
+            <span data-i18n="field.targetRole">目标岗位 / 申请方向 *</span>
+            <input id="targetRole" name="targetRole" type="text" required data-i18n-placeholder="placeholder.targetRole" placeholder="例如 Data Analyst Intern / Finance Graduate Trainee" />
+          </label>
+
+          <label>
+            <span data-i18n="field.targetCountry">目标国家 / 城市</span>
+            <input id="targetCountry" name="targetCountry" type="text" data-i18n-placeholder="placeholder.targetCountry" placeholder="例如 Malaysia / Singapore / China" />
+          </label>
+
+          <label>
+            <span data-i18n="field.outputLanguage">输出语言 *</span>
+            <select id="outputLanguage" name="outputLanguage" required>
+              <option value="en" data-i18n="option.outputEn">英文简历</option>
+              <option value="zh" data-i18n="option.outputZh">中文简历</option>
+            </select>
+          </label>
+
+          <label class="wide-field">
+            <span data-i18n="field.resumeText">简历资料大杂烩 *</span>
+            <textarea
+              id="resumeText"
+              name="resumeText"
+              rows="12"
+              required
+              data-i18n-placeholder="placeholder.resumeText"
+              placeholder="可以直接粘贴：旧简历、教育经历、课程项目、实习、兼职、社团、技能、证书、目标 JD、想重点强调的经历..."
+            ></textarea>
+          </label>
+
+          <label class="wide-field">
+            <span data-i18n="field.notes">额外要求</span>
+            <textarea id="resumeNotes" name="notes" rows="4" data-i18n-placeholder="placeholder.notes" placeholder="例如：希望偏向数据分析、不要夸张、某段经历不想放进简历、内容需要更像实习投递等"></textarea>
+          </label>
+
+          <label>
+            <span data-i18n="field.proof">付款截图或 PDF *</span>
+            <input id="resumePaymentProof" name="paymentProof" type="file" accept="image/png,image/jpeg,image/webp,application/pdf" required />
+          </label>
+
+          <div class="resume-price-box">
+            <span data-i18n="price.kicker">Fixed package</span>
+            <strong>79 RM</strong>
+            <p data-i18n="price.body">图片结构版 PDF + ATS 投递版 PDF</p>
+          </div>
+
+          <label class="check-row">
+            <input id="contentAck" name="contentAck" type="checkbox" required />
+            <span data-i18n="field.contentAck">我确认提供的信息真实准确；系统可以优化表达，但不会凭空编造学历、公司、奖项或经历。</span>
+          </label>
+
+          <label class="check-row">
+            <input id="paymentAck" name="paymentAck" type="checkbox" required />
+            <span data-i18n="field.paymentAck">我理解本服务交付两份简历 PDF，不承诺获得面试或录取结果。</span>
+          </label>
+
+          <button id="resumeSubmitButton" type="submit" class="submit-button" data-i18n="button.submit">提交并开始审核付款</button>
+        </form>
+      </section>
+
+      <section class="order-section resume-output-section" id="resume-output">
+        <div class="order-heading">
+          <h2 data-i18n="output.title">输出结果与下载</h2>
+          <p data-i18n="output.body">提交后，订单状态和两份 PDF 下载按钮会出现在这里。之后也可以输入订单访问码重新查询。</p>
+        </div>
+
+        <form id="resumeLookupForm" class="resume-lookup-form">
+          <label>
+            <span data-i18n="field.orderId">订单访问码</span>
+            <input id="resumeLookupId" name="orderId" type="text" autocomplete="off" data-i18n-placeholder="placeholder.orderId" placeholder="粘贴提交后获得的订单访问码" />
+          </label>
+          <button id="resumeLookupButton" type="submit" class="secondary-link" data-i18n="button.lookup">查询结果</button>
+        </form>
+
+        <div id="resumeResult" class="result-box review">
+          <strong data-i18n="output.emptyTitle">成果会显示在这里</strong>
+          <p data-i18n="output.emptyBody">付款通过并生成完成后，这里会出现 ATS 投递版 PDF 和图片结构版 PDF 的下载按钮。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span data-i18n="footer.owner">Copyright © 2026 LAI ZEYU. All rights reserved.</span>
+      <a href="#resume-order" data-i18n="footer.back">回到提交区</a>
+    </footer>
+
+    <script src="/resume.js"></script>
+  </body>
+</html>
