@@ -1,7 +1,7 @@
 # Lrobotform Resume
 
 > Created and owned by **LAI ZEYU**
-> Copyright (c) 2026 LAI ZEYU. All rights reserved.
+> Copyright (c) 2026 LAI ZEYU. Released under the MIT License.
 
 Lrobotform Resume is a bilingual, privacy-aware resume workflow that converts
 verified source material into two deliverables:
@@ -89,22 +89,34 @@ See [SECURITY.md](SECURITY.md) for reporting and production boundaries.
 
 Requirements:
 
-- Node.js 20 or later
+- Node.js 22 or later
+- npm 10 or later
 - Python 3.10 or later
-- Cloudflare Wrangler
 
 ```bash
-npm install
-npm test
+git clone https://github.com/lzy2767865503-pixel/lrobotform-resume.git
+cd lrobotform-resume
+./scripts/verify.sh
 ```
+
+The verifier installs the locked Node and Python dependencies, performs a
+Worker dry-run, applies the D1 migration locally, and runs Worker and runner
+behavior tests without contacting OpenAI or using Cloudflare credentials.
+See [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md) for the tested boundary
+and expected results.
 
 For local API development, copy `.dev.vars.example` to `.dev.vars`, create a
 local D1 database, and apply the migration:
 
 ```bash
+cp .dev.vars.example .dev.vars
 npm run db:migrate:local
 npm run dev
 ```
+
+Replace or remove placeholder API credentials before testing integrations. With
+no OpenAI key, payment evidence is routed to manual review rather than uploaded
+to a model.
 
 Never commit `.dev.vars`, `.env`, API keys, customer materials, or payment
 proofs. The ignore rules block these common secret and data paths.
@@ -116,11 +128,17 @@ Ubuntu server for the Resume runner. Replace the placeholder resource IDs in
 `wrangler.jsonc`, configure secrets through the provider dashboards or secret
 stores, then follow [docs/deployment.md](docs/deployment.md).
 
+Local validation is fully credential-free. A production-equivalent deployment
+requires accounts and credentials supplied by the reproducer for Cloudflare,
+OpenAI, and an Ubuntu-compatible host; none are included in this repository.
+
 ## Ownership
 
 Repository metadata, commit authorship, package metadata, CODEOWNERS,
 `CITATION.cff`, and the visible product footer identify **LAI ZEYU** as the
 project owner and creator. See [PROJECT_OWNERSHIP.md](PROJECT_OWNERSHIP.md).
 
-This is a source-available portfolio repository, not an open-source project.
-See [LICENSE](LICENSE) before using any part of it.
+The software is available under the [MIT License](LICENSE), which permits
+independent reproduction while retaining the copyright and license notice. The
+license does not transfer authorship, the Lrobotform name, logos, project
+identity, or third-party trademark rights.

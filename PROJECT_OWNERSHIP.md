@@ -6,7 +6,7 @@
 
 **GitHub account:** [lzy2767865503-pixel](https://github.com/lzy2767865503-pixel)
 
-**Copyright:** Copyright (c) 2026 LAI ZEYU. All rights reserved.
+**Copyright:** Copyright (c) 2026 LAI ZEYU. Released under the MIT License.
 
 ## Repository Evidence
 
@@ -31,3 +31,8 @@ GitHub history and copyright notices provide a clear, dated authorship and
 ownership record for portfolio assessment. They are not a substitute for any
 formal trademark, patent, or government copyright registration that may be
 required in a particular jurisdiction.
+
+The MIT License permits independent use, reproduction, and modification of the
+software while preserving the copyright and license notice. It does not
+transfer authorship, the Lrobotform project identity, logos, or any third-party
+trademark rights.

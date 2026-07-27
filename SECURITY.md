@@ -1,10 +1,21 @@
 # Security Policy
 
-## Reporting
+## Supported Version
 
-Please use the repository's private GitHub security advisory feature to report
-a vulnerability. Do not include customer data, payment receipts, API keys, or
-other credentials in a public issue.
+Security fixes are applied to the latest commit on the default branch.
+
+## Private Reporting
+
+Report vulnerabilities through GitHub's
+[private vulnerability reporting form](https://github.com/lzy2767865503-pixel/lrobotform-resume/security/advisories/new).
+Do not open a public issue containing exploit details, customer data, payment
+receipts, API keys, access codes, or other credentials.
+
+If GitHub does not show the private form, contact
+[@lzy2767865503-pixel](https://github.com/lzy2767865503-pixel) without including
+sensitive details and request a private reporting channel. Acknowledgement or
+remediation timing cannot be guaranteed, but good-faith reports will be
+reviewed.
 
 ## Security Boundaries
 

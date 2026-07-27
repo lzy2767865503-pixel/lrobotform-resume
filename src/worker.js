@@ -1,4 +1,5 @@
-// Copyright (c) 2026 LAI ZEYU. All rights reserved.
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 LAI ZEYU
 
 const PRODUCT = "Lrobotform Resume";
 const OWNER = "LAI ZEYU";
@@ -11,6 +12,7 @@ const MAX_PROOF_BYTES = 8 * 1024 * 1024;
 const MAX_ORDER_BYTES = 9 * 1024 * 1024;
 const MAX_PDF_BYTES = 5 * 1024 * 1024;
 const RUNNER_STALE_MINUTES = 30;
+const FX_FETCH_TIMEOUT_MS = 5000;
 const RATE_LIMITS = new Map();
 
 function nowStamp() {
@@ -183,18 +185,24 @@ function money(value) {
   return Number.isFinite(parsed) ? Math.round(parsed * 100) / 100 : null;
 }
 
-async function currentMyrCnyRate(env) {
+async function currentMyrCnyRate(env, fetchImpl = fetch, timeoutMs = FX_FETCH_TIMEOUT_MS) {
   const configured = Number(env.MYR_CNY_RATE);
   if (Number.isFinite(configured) && configured > 0) return configured;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), Math.max(1, timeoutMs));
   try {
-    const response = await fetch("https://open.er-api.com/v6/latest/MYR", {
+    const response = await fetchImpl("https://open.er-api.com/v6/latest/MYR", {
       cf: { cacheTtl: 900, cacheEverything: true },
+      signal: controller.signal,
     });
+    if (!response.ok) throw new Error(`FX service HTTP ${response.status}`);
     const data = await response.json();
     const rate = Number(data?.rates?.CNY);
     if (Number.isFinite(rate) && rate > 0) return rate;
   } catch {
     // A conservative fallback keeps order intake available if the rate service is temporarily unavailable.
+  } finally {
+    clearTimeout(timeout);
   }
   return DEFAULT_MYR_CNY_RATE;
 }
@@ -737,6 +745,12 @@ function validatePdf(bytes, label) {
   return { bytes: data.length, passed: true };
 }
 
+function validateCompletionGate(atsKey, visualKey, result) {
+  if (!atsKey || !visualKey) throw new Error("Both ATS and visual PDFs are required.");
+  if (result?.quality?.passed !== true) throw new Error("The resume quality gate did not pass.");
+  return true;
+}
+
 async function storeRunnerPdf(env, orderId, jobId, type, payload) {
   const encoded = payload?.[`${type}PdfBase64`];
   if (!encoded) return "";
@@ -774,8 +788,7 @@ async function handleRunnerUpdate(request, env) {
     try {
       atsKey = (await storeRunnerPdf(env, job.resume_order_id, jobId, "ats", payload)) || atsKey;
       visualKey = (await storeRunnerPdf(env, job.resume_order_id, jobId, "visual", payload)) || visualKey;
-      if (!atsKey || !visualKey) throw new Error("Both ATS and visual PDFs are required.");
-      if (result.quality?.passed !== true) throw new Error("The resume quality gate did not pass.");
+      validateCompletionGate(atsKey, visualKey, result);
     } catch (validationError) {
       status = "failed";
       error = String(validationError?.message || validationError).slice(0, 1000);
@@ -945,6 +958,14 @@ async function handleApi(request, env) {
   }
   return json({ ok: false, error: "Not found." }, 404);
 }
+
+export const __test = Object.freeze({
+  currentMyrCnyRate,
+  proofSignatureIssue,
+  sameOriginBrowserWrite,
+  validateCompletionGate,
+  validatePdf,
+});
 
 export default {
   async fetch(request, env) {

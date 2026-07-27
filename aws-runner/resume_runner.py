@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Copyright (c) 2026 LAI ZEYU. All rights reserved.
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 LAI ZEYU
 
 import base64
 import io
