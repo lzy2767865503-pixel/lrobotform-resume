@@ -1,4 +1,5 @@
-// Copyright (c) 2026 LAI ZEYU. All rights reserved.
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 LAI ZEYU
 
 const resumeOrderForm = document.querySelector("#resumeOrderForm");
 const resumeResult = document.querySelector("#resumeResult");
@@ -25,7 +26,7 @@ const resumeTranslations = {
     "position.title": "我们的定位",
     "position.body": "以事实一致性、岗位相关性和 ATS 可读性为核心。每份简历先整理原始资料，再经过自动质量复审与双 PDF 文件验收；不会凭空编造学历、公司、奖项或数字。",
     "owner.title": "项目产权",
-    "owner.body": "Lrobotform Resume 由 LAI ZEYU 创建并拥有。Copyright © 2026 LAI ZEYU. All rights reserved.",
+    "owner.body": "Lrobotform Resume 由 LAI ZEYU 创建。Copyright © 2026 LAI ZEYU，软件以 MIT License 发布。",
     "outputs.title": "一次付款，两份 PDF",
     "outputs.body": "同一份资料会生成两个用途不同的版本。图片版适合人工阅读和展示，ATS 版适合投递系统读取。",
     "outputs.visualKicker": "Version 01",
@@ -73,7 +74,7 @@ const resumeTranslations = {
     "button.lookup": "查询结果",
     "button.checking": "正在查询...",
     "footer.back": "回到提交区",
-    "footer.owner": "Copyright © 2026 LAI ZEYU. All rights reserved.",
+    "footer.owner": "Copyright © 2026 LAI ZEYU · MIT License",
     "download.ats": "下载 ATS 投递版 PDF",
     "download.visual": "下载图片结构版 PDF",
     "result.ready": "简历已生成",
@@ -128,7 +129,7 @@ const resumeTranslations = {
     "position.title": "Positioning",
     "position.body": "Built around factual consistency, role relevance, and ATS readability. Every resume is structured from the original material, quality-reviewed, and validated as two complete PDFs without inventing education, employers, awards, or metrics.",
     "owner.title": "Project ownership",
-    "owner.body": "Lrobotform Resume was created and is owned by LAI ZEYU. Copyright © 2026 LAI ZEYU. All rights reserved.",
+    "owner.body": "Lrobotform Resume was created by LAI ZEYU. Copyright © 2026 LAI ZEYU. Software released under the MIT License.",
     "outputs.title": "One payment, two PDFs",
     "outputs.body": "The same information is turned into two practical versions: a picture-style version for human reading and an ATS version for application systems.",
     "outputs.visualKicker": "Version 01",
@@ -176,7 +177,7 @@ const resumeTranslations = {
     "button.lookup": "Check Result",
     "button.checking": "Checking...",
     "footer.back": "Back to form",
-    "footer.owner": "Copyright © 2026 LAI ZEYU. All rights reserved.",
+    "footer.owner": "Copyright © 2026 LAI ZEYU · MIT License",
     "download.ats": "Download ATS-ready PDF",
     "download.visual": "Download picture-style PDF",
     "result.ready": "Resume generated",

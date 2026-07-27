@@ -1,9 +1,21 @@
 # Deployment Guide
 
+This guide describes a production-equivalent deployment. It requires your own
+Cloudflare and OpenAI accounts plus an Ubuntu-compatible host. Never reuse
+development secrets in production.
+
 ## 1. Cloudflare Resources
 
-Create a dedicated D1 database and private R2 bucket. Update only these
-placeholder values in `wrangler.jsonc`:
+Authenticate Wrangler, create a dedicated D1 database and private R2 bucket,
+then copy the returned D1 identifier into `wrangler.jsonc`:
+
+```bash
+npx wrangler login
+npx wrangler d1 create lrobotform-resume
+npx wrangler r2 bucket create lrobotform-resume-private
+```
+
+Update only these placeholder values in `wrangler.jsonc`:
 
 - D1 `database_name` and `database_id`;
 - R2 `bucket_name`.
@@ -16,13 +28,14 @@ npm run db:migrate:remote
 
 ## 2. Worker Secrets
 
-Store these as Cloudflare Worker secrets, never as repository variables:
+Generate two different high-entropy bearer secrets. Store the following with
+`npx wrangler secret put NAME`; never place them in `wrangler.jsonc`:
 
-- `ADMIN_KEY`: long random owner API secret;
-- `RUNNER_SECRET`: different long random AWS runner secret;
+- `ADMIN_KEY`: owner API secret;
+- `RUNNER_SECRET`: separate runner API secret;
 - `OPENAI_API_KEY`: server-side OpenAI credential.
 
-Optional non-secret variables:
+Optional non-secret variables may be added under `vars` in `wrangler.jsonc`:
 
 - `OPENAI_VISION_MODEL`;
 - `OPENAI_IMAGE_DETAIL`;
@@ -34,10 +47,37 @@ Deploy with:
 npm run deploy
 ```
 
-## 3. AWS Runner
+Verify the returned Worker URL before configuring the runner:
 
-Copy `resume_runner.py`, `requirements.txt`, and the systemd service to
-`/opt/lrobotform-runner`. Create a root-readable `.env` file:
+```bash
+curl --fail --silent --show-error https://your-worker.example.com/api/health
+```
+
+## 3. Ubuntu Runner
+
+Run these commands from a clean repository clone. They create a non-login,
+least-privilege service account and a root-owned directory readable by the
+`lrobotform` group:
+
+```bash
+sudo useradd --system \
+  --home-dir /opt/lrobotform-runner \
+  --shell /usr/sbin/nologin \
+  lrobotform 2>/dev/null || true
+sudo install -d -o root -g lrobotform -m 0750 /opt/lrobotform-runner
+sudo install -o root -g lrobotform -m 0640 \
+  aws-runner/resume_runner.py \
+  aws-runner/requirements.txt \
+  /opt/lrobotform-runner/
+sudo python3 -m venv /opt/lrobotform-runner/.venv
+sudo /opt/lrobotform-runner/.venv/bin/python -m pip install \
+  --requirement /opt/lrobotform-runner/requirements.txt
+sudo chown -R root:lrobotform /opt/lrobotform-runner
+sudo chmod 0750 /opt/lrobotform-runner
+```
+
+Create `/opt/lrobotform-runner/.env` with the same runner secret configured on
+Cloudflare and a valid server-side OpenAI key:
 
 ```dotenv
 LROBOTFORM_BASE_URL=https://your-worker.example.com
@@ -49,22 +89,22 @@ RESUME_MAX_ATTEMPTS=3
 RESUME_QUALITY_MIN=82
 ```
 
-Set restrictive permissions:
+Protect the file while allowing the service group to read it:
 
 ```bash
-sudo chown -R root:root /opt/lrobotform-runner
-sudo chmod 700 /opt/lrobotform-runner
-sudo chmod 600 /opt/lrobotform-runner/.env
-```
-
-Install dependencies and enable the service:
-
-```bash
-python3 -m pip install -r /opt/lrobotform-runner/requirements.txt
-sudo cp /opt/lrobotform-runner/lrobotform-resume-runner.service /etc/systemd/system/
+sudo chown root:lrobotform /opt/lrobotform-runner/.env
+sudo chmod 0640 /opt/lrobotform-runner/.env
+sudo install -o root -g root -m 0644 \
+  aws-runner/lrobotform-resume-runner.service \
+  /etc/systemd/system/lrobotform-resume-runner.service
 sudo systemctl daemon-reload
 sudo systemctl enable --now lrobotform-resume-runner
+sudo systemctl status --no-pager lrobotform-resume-runner
 ```
+
+The unit runs as `lrobotform:lrobotform`; do not change the application
+directory back to mode `0700 root:root`, because that would prevent the service
+account from reading its code and environment.
 
 ## 4. Production Controls
 
@@ -75,3 +115,4 @@ sudo systemctl enable --now lrobotform-resume-runner
 - Back up D1 before schema changes.
 - Monitor queued and stale jobs, API failures, and abnormal proof reuse.
 - Never add real receipts or customer resumes to tests or issue reports.
+- Run `npm ci && npm test` before each deployment.
