@@ -1,6 +1,6 @@
 {
   "name": "lrobotform-resume",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A privacy-aware, quality-gated dual-PDF resume generation pipeline.",
   "author": "LAI ZEYU (https://github.com/lzy2767865503-pixel)",
   "license": "MIT",
