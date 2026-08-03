@@ -19,7 +19,7 @@
     "test": "npm run check && npm run check:runner && npm run test:worker && npm run test:runner && npm run test:migration"
   },
   "devDependencies": {
-    "wrangler": "^4.100.0"
+    "wrangler": "^4.118.0"
   },
   "engines": {
     "node": ">=22",
