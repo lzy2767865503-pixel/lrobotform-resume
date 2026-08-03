@@ -13,7 +13,10 @@ const MAX_ORDER_BYTES = 9 * 1024 * 1024;
 const MAX_PDF_BYTES = 5 * 1024 * 1024;
 const RUNNER_STALE_MINUTES = 30;
 const FX_FETCH_TIMEOUT_MS = 5000;
+const RATE_LIMIT_RETENTION_MS = 15 * 60 * 1000;
+const MAX_RATE_LIMIT_BUCKETS = 4096;
 const RATE_LIMITS = new Map();
+let rateLimitChecks = 0;
 
 function nowStamp() {
   return new Date().toISOString();
@@ -56,16 +59,44 @@ function clientIp(request) {
   return request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For")?.split(",")[0]?.trim() || "unknown";
 }
 
-function rateLimited(bucket, limit, windowSeconds) {
-  const cutoff = Date.now() - windowSeconds * 1000;
+function pruneRateLimits(now = Date.now()) {
+  const cutoff = now - RATE_LIMIT_RETENTION_MS;
+  let removed = 0;
+  for (const [bucket, hits] of RATE_LIMITS) {
+    if (!hits.length || hits[hits.length - 1] <= cutoff) {
+      RATE_LIMITS.delete(bucket);
+      removed += 1;
+    }
+  }
+  return removed;
+}
+
+function rateLimited(bucket, limit, windowSeconds, now = Date.now()) {
+  rateLimitChecks += 1;
+  if (rateLimitChecks % 256 === 0) pruneRateLimits(now);
+  if (!RATE_LIMITS.has(bucket) && RATE_LIMITS.size >= MAX_RATE_LIMIT_BUCKETS) {
+    pruneRateLimits(now);
+    if (RATE_LIMITS.size >= MAX_RATE_LIMIT_BUCKETS) {
+      RATE_LIMITS.delete(RATE_LIMITS.keys().next().value);
+    }
+  }
+
+  const cutoff = now - windowSeconds * 1000;
   const hits = (RATE_LIMITS.get(bucket) || []).filter((stamp) => stamp > cutoff);
   if (hits.length >= limit) {
+    RATE_LIMITS.delete(bucket);
     RATE_LIMITS.set(bucket, hits);
     return true;
   }
-  hits.push(Date.now());
+  hits.push(now);
+  RATE_LIMITS.delete(bucket);
   RATE_LIMITS.set(bucket, hits);
   return false;
+}
+
+function resetRateLimits() {
+  RATE_LIMITS.clear();
+  rateLimitChecks = 0;
 }
 
 function sameOriginBrowserWrite(request, url) {
@@ -961,7 +992,11 @@ async function handleApi(request, env) {
 
 export const __test = Object.freeze({
   currentMyrCnyRate,
+  pruneRateLimits,
   proofSignatureIssue,
+  rateLimitBucketCount: () => RATE_LIMITS.size,
+  rateLimited,
+  resetRateLimits,
   sameOriginBrowserWrite,
   validateCompletionGate,
   validatePdf,
