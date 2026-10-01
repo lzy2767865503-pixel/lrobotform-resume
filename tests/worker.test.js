@@ -131,3 +131,13 @@ test("exchange-rate lookup uses configured data or a bounded fallback without ne
   assert.equal(timedOut, 1.55);
   assert.ok(Date.now() - started < 500, "fallback should not wait on an unbounded request");
 });
+
+test("rate-limit buckets expire instead of accumulating for the isolate lifetime", () => {
+  __test.resetRateLimits();
+  assert.equal(__test.rateLimited("client-a", 1, 60, 0), false);
+  assert.equal(__test.rateLimited("client-a", 1, 60, 1), true);
+  assert.equal(__test.rateLimitBucketCount(), 1);
+  assert.equal(__test.pruneRateLimits(15 * 60 * 1000 + 1), 1);
+  assert.equal(__test.rateLimitBucketCount(), 0);
+  __test.resetRateLimits();
+});

@@ -1,1 +1,6 @@
-* @lzy2767865503-pixel
+# Review requests are reserved for product code, not bot-only dependency updates.
+/src/ @lzy2767865503-pixel
+/public/ @lzy2767865503-pixel
+/migrations/ @lzy2767865503-pixel
+/aws-runner/*.py @lzy2767865503-pixel
+/aws-runner/tests/ @lzy2767865503-pixel
